@@ -1,7 +1,7 @@
 package punctA;
 
 import java.util.concurrent.locks.ReentrantLock;
-
+//Class used as a shared resource
 public class Oala {
     private volatile int capacity;
     private ReentrantLock lock;

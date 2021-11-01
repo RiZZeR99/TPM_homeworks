@@ -2,7 +2,7 @@ package punctA;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//Class responsible with running the threads.
 public class MainProgram {
     public static void main(String[] args) {
         int capacity = 2;

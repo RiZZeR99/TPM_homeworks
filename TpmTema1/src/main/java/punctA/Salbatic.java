@@ -1,5 +1,5 @@
 package punctA;
-
+//Class modelling an salbatic which eats
 public class Salbatic extends Thread {
     private final Oala referenceToOala;
     private final Chef referenceToChef;

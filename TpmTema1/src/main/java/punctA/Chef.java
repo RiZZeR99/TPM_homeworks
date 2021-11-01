@@ -1,7 +1,7 @@
 package punctA;
 
 import java.util.concurrent.locks.ReentrantLock;
-
+//Class responsible with fulling the oala
 public class Chef extends Thread {
     private Oala referenceToOala;
     private int capacity;
