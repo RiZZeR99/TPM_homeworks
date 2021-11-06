@@ -1,14 +1,12 @@
-package com.company;
+package punctA;
 
 public class Salbatic extends Thread {
 
     private Oala oalaReferinta;
-    private Chef chefReferinta;
     private NotificareChef canal;
     private String salbatic;
 
-    public Salbatic(Oala oala, Chef chef, NotificareChef canal) {
-        chefReferinta = chef;
+    public Salbatic(Oala oala, NotificareChef canal) {
         oalaReferinta = oala;
         this.canal = canal;
         this.salbatic = "Salbatic " + (int) getId();
@@ -16,14 +14,13 @@ public class Salbatic extends Thread {
 
     @Override
     public void run() {
-        oalaReferinta.lock();
-        System.out.println(salbatic + " a obtinut lock");
+        oalaReferinta.lock(salbatic);
         while (oalaReferinta.isEsteGoala()) {
             System.out.println(salbatic + " vede oala goala. Asteapta umplere oala");
-            oalaReferinta.unlock();
+            oalaReferinta.unlock(salbatic);
             while (oalaReferinta.isEsteGoala()) {
             }
-            oalaReferinta.lock();
+            oalaReferinta.lock(salbatic);
         }
         System.out.println(salbatic + " mananca");
         oalaReferinta.scadeCapacitate();
@@ -35,8 +32,7 @@ public class Salbatic extends Thread {
             canal.setCerere(true);
             canal.unlock();
         }
-        oalaReferinta.unlock();
-        System.out.println(salbatic + " a deblocat oala");
+        oalaReferinta.unlock(salbatic);
     }
 
 }

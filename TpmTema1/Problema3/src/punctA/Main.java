@@ -1,4 +1,4 @@
-package com.company;
+package punctA;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,15 +6,15 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        int capacity = 2;
-        int numberOfSalbatici = 5;
+        int capacity = 10;
+        int numberOfSalbatici = 10;
         Oala oala = new Oala(capacity);
         NotificareChef notificareChef = new NotificareChef();
         Chef chef = new Chef(oala, notificareChef, capacity);
         chef.start();
         List<Salbatic> salbaticList = new ArrayList<>(5);
         for (int i : new int[numberOfSalbatici]) {
-            salbaticList.add(new Salbatic(oala, chef, notificareChef));
+            salbaticList.add(new Salbatic(oala, notificareChef));
         }
         salbaticList.forEach(Thread::start);
         for (Salbatic salbatic : salbaticList) {

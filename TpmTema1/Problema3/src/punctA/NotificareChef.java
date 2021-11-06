@@ -1,4 +1,4 @@
-package com.company;
+package punctA;
 
 public class NotificareChef {
 
