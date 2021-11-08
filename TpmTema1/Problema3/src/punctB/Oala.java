@@ -19,6 +19,7 @@ public class Oala {
         }
     }
 
+    //fair lock
     public void lock(String name, int indexThread) {
         synchronized (this) {
 //            System.out.println(indexThread + " entered with name " + name);
@@ -37,6 +38,7 @@ public class Oala {
         }
     }
 
+    //unfair lock
     public void lockUnfair(String name, int indexThread) {
         synchronized (this) {
 //            System.out.println("Thread " + name + " vrea sa obtina lock");

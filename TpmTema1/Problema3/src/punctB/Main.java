@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         int capacity = 2;
         int meals = 100;
-        int numberOfSalbatici = 10;
+        int numberOfSalbatici = 200;
         Oala oala = new Oala(capacity, numberOfSalbatici);
         NotificareChef notificareChef = new NotificareChef();
         Chef chef = new Chef(oala, notificareChef, capacity);

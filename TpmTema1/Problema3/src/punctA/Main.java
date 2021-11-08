@@ -6,14 +6,14 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        int capacity = 10;
-        int numberOfSalbatici = 10;
+        int capacity = 2;
+        int numberOfSalbatici = 5;
         Oala oala = new Oala(capacity);
         NotificareChef notificareChef = new NotificareChef();
         Chef chef = new Chef(oala, notificareChef, capacity);
         chef.start();
-        List<Salbatic> salbaticList = new ArrayList<>(5);
-        for (int i : new int[numberOfSalbatici]) {
+        List<Salbatic> salbaticList = new ArrayList<>(numberOfSalbatici);
+        for (int i = 0; i < numberOfSalbatici; i++) {
             salbaticList.add(new Salbatic(oala, notificareChef));
         }
         salbaticList.forEach(Thread::start);
