@@ -23,7 +23,7 @@ public class Chef extends Thread {
                 oalaReferinta.setEsteGoala(false);
 //                System.out.println("Am terminat de umplut oala. Eliberez lock oala");
                 notificareChef.setCerere(false);
-                oalaReferinta.unlock("Chef");
+                oalaReferinta.unlock("Chef",0);
             }
             notificareChef.unlock();
         }

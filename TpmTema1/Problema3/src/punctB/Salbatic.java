@@ -7,50 +7,60 @@ public class Salbatic extends Thread {
     private String salbatic;
     private int countMeals;
     private int index;
-    private double averageAccessWait;
-    private double time;
+    private double accessTime;
+    private double[] data;
 
     public Salbatic(Oala oala, NotificareChef canal, int meals, int index) {
         oalaReferinta = oala;
         this.canal = canal;
-        this.salbatic = "Salbatic " + (int) getId();
+        this.salbatic = "Salbatic " + index;
         this.countMeals = meals;
+        this.index = index;
+        data = new double[meals];
     }
 
-    public double getAverageAccessWait() {
-        return averageAccessWait;
-    }
-
-    public void setAverageAccessWait(double averageAccessWait) {
-        this.averageAccessWait = averageAccessWait;
+    public double[] getData() {
+        return data;
     }
 
     private void eat() {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < countMeals; i++) {
             double start = System.currentTimeMillis();
+//            System.out.println(salbatic + " tries to get the lock");
             oalaReferinta.lock(salbatic, index);
+//            System.out.println(salbatic + " get the lock");
             while (oalaReferinta.isEsteGoala()) {
 //                System.out.println(salbatic + " vede oala goala. Asteapta umplere oala");
-                oalaReferinta.unlock(salbatic);
+                oalaReferinta.unlock(salbatic, index);
                 while (oalaReferinta.isEsteGoala()) {
                 }
                 oalaReferinta.lock(salbatic, index);
             }
-//            System.out.println(salbatic + " mananca");
-            oalaReferinta.scadeCapacitate();
-            if (oalaReferinta.veziNumarPortii() == 0) {
+            try {
+//            System.out.println(salbatic + " mananca la tura " + i);
+                oalaReferinta.scadeCapacitate(index);
+                if (oalaReferinta.veziNumarPortii() == 0) {
 //                System.out.println(salbatic + " vede oala goala. Notifica chef");
-                oalaReferinta.setEsteGoala(true);
+                    oalaReferinta.setEsteGoala(true);
 //                System.out.println(salbatic + " trimite notificare spre chef");
-                canal.lock();
-                canal.setCerere(true);
-                canal.unlock();
+                    canal.lock();
+                    canal.setCerere(true);
+                    canal.unlock();
+                }
+            } catch (Exception e) {
+                System.out.println("Error thread " + salbatic + ". Tried to eat -1 portie");
+            } finally {
+                oalaReferinta.unlock(salbatic, index);
             }
-            oalaReferinta.unlock(salbatic);
             double finish = System.currentTimeMillis();
-            averageAccessWait += (finish - start);
+            accessTime += (finish - start);
+            data[i] = accessTime;
         }
-        System.out.println(salbatic + " a accessat in medie oala intr-un timp de " + averageAccessWait / countMeals);
+//        System.out.println(salbatic + " a accessat in medie oala intr-un timp de " + accessTime / countMeals);
+    }
+
+    public int getIndex() {
+        return index;
     }
 
     @Override

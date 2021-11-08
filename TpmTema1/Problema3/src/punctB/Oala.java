@@ -12,12 +12,16 @@ public class Oala {
     public Oala(int capacitate, int participants) {
         this.capacitate = capacitate;
         this.participant = participants;
-        level = new int[participants];
-        victim = new int[participants];
+        level = new int[participants + 2];
+        victim = new int[participants + 2];
+        for (int i = 0; i <= participants; i++) {
+            level[i] = victim[i] = 0;
+        }
     }
 
     public void lock(String name, int indexThread) {
         synchronized (this) {
+//            System.out.println(indexThread + " entered");
             for (int L = 1; L < this.participant; L++) {
                 level[indexThread] = L;
                 victim[L] = indexThread;
@@ -59,19 +63,22 @@ public class Oala {
         return false;
     }
 
-    public void unlock(String name) {
+    public void unlock(String name, int index) {
 //        System.out.println("Deblocare de catre " + name);
         isLocked = false;
+        if (level.length > 0) {
+            level[index] = 0;
+        }
     }
 
     public void umpleOala(int capacitate) {
         this.capacitate = capacitate;
     }
 
-    public void scadeCapacitate() {
+    public void scadeCapacitate(int index) {
         if (capacitate > 0) capacitate--;
         else try {
-            throw new Exception("Ai mancat -1 portie");
+            throw new Exception("Ai mancat -1 portie salbatic + " + index);
         } catch (Exception e) {
             e.printStackTrace();
         }

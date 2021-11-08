@@ -22,17 +22,20 @@ public class Salbatic extends Thread {
             }
             oalaReferinta.lock(salbatic);
         }
-        System.out.println(salbatic + " mananca");
-        oalaReferinta.scadeCapacitate();
-        if (oalaReferinta.veziNumarPortii() == 0) {
-            System.out.println(salbatic + " vede oala goala. Notifica chef");
-            oalaReferinta.setEsteGoala(true);
-            System.out.println(salbatic + " trimite notificare spre chef");
-            canal.lock();
-            canal.setCerere(true);
-            canal.unlock();
+        try {
+            System.out.println(salbatic + " mananca");
+            oalaReferinta.scadeCapacitate();
+            if (oalaReferinta.veziNumarPortii() == 0) {
+                System.out.println(salbatic + " vede oala goala. Notifica chef");
+                oalaReferinta.setEsteGoala(true);
+                System.out.println(salbatic + " trimite notificare spre chef");
+                canal.lock();
+                canal.setCerere(true);
+                canal.unlock();
+            }
+        } finally {
+            oalaReferinta.unlock(salbatic);
         }
-        oalaReferinta.unlock(salbatic);
     }
 
 }
