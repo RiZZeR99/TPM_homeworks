@@ -41,7 +41,7 @@ public class Main {
         double finishProcess = System.currentTimeMillis();
 
         chef.stop();
-        System.out.println("Everything went smoothly");
+        System.out.println("Everything went smoothly. The time is in milliseconds.");
         System.out.println("Total time to run: " + (finishProcess - startProcess));
         for (int i = 1; i <= numberOfSalbatici; i++) {
             System.out.println(statistics[i]);

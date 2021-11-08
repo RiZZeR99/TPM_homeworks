@@ -37,18 +37,17 @@ public class Salbatic extends Thread {
                 oalaReferinta.lock(salbatic, index);
             }
             try {
-//            System.out.println(salbatic + " mananca la tura " + i);
-                oalaReferinta.scadeCapacitate(index);
-                if (oalaReferinta.veziNumarPortii() == 0) {
-//                System.out.println(salbatic + " vede oala goala. Notifica chef");
+//                System.out.println(salbatic + " mananca la tura " + i);
+                if (oalaReferinta.veziNumarPortii() == 0 && !oalaReferinta.scadeCapacitate(index)) {
+//                    System.out.println(salbatic + " vede oala goala. Notifica chef");
                     oalaReferinta.setEsteGoala(true);
-//                System.out.println(salbatic + " trimite notificare spre chef");
+//                    System.out.println(salbatic + " trimite notificare spre chef");
                     canal.lock();
                     canal.setCerere(true);
                     canal.unlock();
                 }
             } catch (Exception e) {
-                System.out.println("Error thread " + salbatic + ". Tried to eat -1 portie");
+                System.out.println("Error thread " + salbatic + ". Tried to eat -1 portie la iteratia " + i);
             } finally {
                 oalaReferinta.unlock(salbatic, index);
             }

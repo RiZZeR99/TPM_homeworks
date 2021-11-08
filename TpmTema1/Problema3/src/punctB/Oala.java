@@ -2,9 +2,9 @@ package punctB;
 
 
 public class Oala {
-    private volatile int capacitate;
+    private volatile int capacitate = 0;
     private volatile boolean isLocked = false;
-    private volatile boolean esteGoala;
+    private volatile boolean esteGoala = false;
     private int participant;
     private int[] level;
     private int[] victim;
@@ -21,7 +21,9 @@ public class Oala {
 
     public void lock(String name, int indexThread) {
         synchronized (this) {
-//            System.out.println(indexThread + " entered");
+//            System.out.println(indexThread + " entered with name " + name);
+            if (indexThread == 0)
+                return;
             for (int L = 1; L < this.participant; L++) {
                 level[indexThread] = L;
                 victim[L] = indexThread;
@@ -31,6 +33,7 @@ public class Oala {
             }
             while (existsThreadStillExecutingCriticalSection(indexThread)) {
             }
+//            System.out.println(indexThread + " exited with name " + name);
         }
     }
 
@@ -75,12 +78,13 @@ public class Oala {
         this.capacitate = capacitate;
     }
 
-    public void scadeCapacitate(int index) {
-        if (capacitate > 0) capacitate--;
-        else try {
-            throw new Exception("Ai mancat -1 portie salbatic + " + index);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public boolean scadeCapacitate(int index) {
+//        System.out.println("Thread "+ index + " mananca");
+        if (capacitate > 0) {
+            capacitate--;
+            return true;
+        } else {
+            return false;
         }
     }
 
